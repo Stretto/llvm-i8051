@@ -1,4 +1,4 @@
-//===-- 8051TargetMachine.cpp - Define TargetMachine for 8051 -----------===//
+//===-- I8051TargetMachine.cpp - Define TargetMachine for I8051 -----------===//
 //
 //                     The LLVM Compiler Infrastructure
 //
@@ -10,19 +10,19 @@
 //
 //===----------------------------------------------------------------------===//
 
-#include "8051TargetMachine.h"
-//#include "8051.h"
+#include "I8051TargetMachine.h"
+//#include "I8051.h"
 #include "llvm/CodeGen/Passes.h"
 #include "llvm/PassManager.h"
 #include "llvm/Support/TargetRegistry.h"
 using namespace llvm;
 
-extern "C" void LLVMInitialize8051Target() {
+extern "C" void LLVMInitializeI8051Target() {
     // Register the target.
-    RegisterTargetMachine<8051TargetMachine> X(The8051Target);
+    RegisterTargetMachine<I8051TargetMachine> X(TheI8051Target);
 }
 
-8051TargetMachine::8051TargetMachine(const Target &T, StringRef TT,
+I8051TargetMachine::I8051TargetMachine(const Target &T, StringRef TT,
                                      StringRef CPU, StringRef FS,
                                      const TargetOptions &Options,
                                      Reloc::Model RM, CodeModel::Model CM,
@@ -36,25 +36,25 @@ extern "C" void LLVMInitialize8051Target() {
 }
 
 namespace {
-/// 8051 Code Generator Pass Configuration Options.
-    class 8051PassConfig : public TargetPassConfig {
+/// I8051 Code Generator Pass Configuration Options.
+    class I8051PassConfig : public TargetPassConfig {
     public:
-        8051PassConfig(8051TargetMachine *TM, PassManagerBase &PM)
+        I8051PassConfig(I8051TargetMachine *TM, PassManagerBase &PM)
         : TargetPassConfig(TM, PM) {}
 
-        8051TargetMachine &get8051TargetMachine() const {
-            return getTM<8051TargetMachine>();
+        I8051TargetMachine &getI8051TargetMachine() const {
+            return getTM<I8051TargetMachine>();
         }
 
         bool addInstSelector() override;
-    };  // end class 8051PassConfig
+    };  // end class I8051PassConfig
 } // namespace
 
-TargetPassConfig *8051TargetMachine::createPassConfig(PassManagerBase &PM) {
-    return new 8051PassConfig(this, PM);
+TargetPassConfig *I8051TargetMachine::createPassConfig(PassManagerBase &PM) {
+    return new I8051PassConfig(this, PM);
 }
 
-bool 8051PassConfig::addInstSelector() {
-    addPass(create8051ISelDag(get8051TargetMachine(), getOptLevel()));
+bool I8051PassConfig::addInstSelector() {
+    addPass(createI8051ISelDag(getI8051TargetMachine(), getOptLevel()));
     return false;
 }
