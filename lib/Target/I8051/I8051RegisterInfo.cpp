@@ -38,7 +38,8 @@ FrameRegister("i8051-frame-register",
                   clEnumValN(IY, "iy", "IY register"),
                   clEnumValEnd));
 
-I8051RegisterInfo::I8051RegisterInfo(I8051TargetMachine &tm, const TargetInstrInfo &tii)
+I8051RegisterInfo::I8051RegisterInfo(I8051TargetMachine &tm,
+                                     const TargetInstrInfo &tii)
     : I8051GenRegisterInfo(I8051::PC), TM(tm), TII(tii)
 {}
 
